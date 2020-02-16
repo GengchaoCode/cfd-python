@@ -1,9 +1,9 @@
 '''
-Solving the 1-D linear convection equation using the finite difference method.
+Solving the 1-D nonlinear convection equation using the finite difference method.
 '''
 
 import numpy as np                              # here we load numpy
-from matplotlib import pyplot as plt             # here we load matplotlib
+from matplotlib import pyplot as plt            # here we load matplotlib
 import time, sys                                # here we load some utilities
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter, AutoMinorLocator)
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
@@ -12,11 +12,12 @@ plt.rcParams["mathtext.fontset"] = "stix"       # set the math font to Times
 
 ## Define the geometry (length), spatial and temporal resolution, and the wavespeed
 lx = 2                                          # consider a domain that is 2 unit of length
-nx = 85                                         # the number of grid points
+nx = 41                                         # the number of grid points
 dx = lx/(nx-1)                                  # grid spacing
 nt = 25                                         # the number of time steps
-dt = 0.025                                      # time step
-c = 1                                           # wavespeed
+nu = 0.3                                        # fluid kinematic viscosity
+sigma = 0.2                                     # a parameter we will learn later
+dt = sigma*dx**2/nu                             # time step for stability
 
 ## Define the initial condition - a hat function
 u = np.ones(nx)                                 # create an array which is nx elements long with every value equal to 1
@@ -48,20 +49,20 @@ plt.tight_layout(pad=0.1)                       # make the layout tight to minim
 ax.annotate('$t = 0.000$ s', xy=(0.75,0.9), xycoords='axes fraction', fontsize=10)
 
 # save and show the figure
-folderName = '/home/ygc/Documents/Codes/cfd-python/linearConvection/'
+folderName = '/home/ygc/Documents/Codes/cfd-python/diffusion/'
 fileName = 'u000.png'
 plt.savefig(folderName+fileName, dpi=300)
 plt.show(block=False)
 plt.pause(0.1)                                  # show the image for 0.1 s
 plt.close()
 
-## Solve the convection equation using the finite element method and plot the result
+## Solve the convection equation using the finite difference method and plot the result
 un = np.ones(nx)                                # initialize an array to store the current velocity
 
 for n in range(nt):                             # advance nt cycles in time
     un = u.copy()                               # copy the current velocity into un
-    for i in range(1,nx):                       # the left-most value is not updated
-        u[i] = un[i]-c*dt/dx*(un[i]-un[i-1])
+    for i in range(1,nx-1):                       # the left-most value is not updated
+        u[i] = un[i]+nu*dt/dx/dx*(un[i+1]-2*un[i]+un[i-1])
 
     # Plot the velocity profile
     plt.figure(figsize=(3,2))
