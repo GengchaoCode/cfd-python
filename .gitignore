@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # output folders
-1dlinearConvection/
+1dLinearConvection/
 1dNonlinearConvection/
 1dDiffusion/
 1dBergers/
