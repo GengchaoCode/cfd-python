@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# output folders
+1dlinearConvection/
+1dNonlinearConvection/
+1dDiffusion/
+1dBergers/
+2dLinearConvection/
+2dNonlinearConvection/
+

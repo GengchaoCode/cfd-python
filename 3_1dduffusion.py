@@ -49,7 +49,7 @@ plt.tight_layout(pad=0.1)                       # make the layout tight to minim
 ax.annotate('$t = 0.000$ s', xy=(0.75,0.9), xycoords='axes fraction', fontsize=10)
 
 # save and show the figure
-folderName = '/home/ygc/Documents/Codes/cfd-python/1ddiffusion/'
+folderName = '/home/ygc/Documents/Codes/cfd-python/1dDiffusion/'
 fileName = 'u000.png'
 plt.savefig(folderName+fileName, dpi=300)
 plt.show(block=False)
