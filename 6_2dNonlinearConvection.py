@@ -1,5 +1,5 @@
 '''
-Solve the 1-D nonlinear convection equation using the finite difference method.
+Solve the 2-D nonlinear convection equation using the finite difference method.
 '''
 
 import numpy as np                              # here we load numpy
@@ -68,8 +68,8 @@ for n in range(nt):
     un = u.copy()
     vn = v.copy()
 
-    for i in range(nx):
-        for j in range(ny):
+    for i in range(1,nx):
+        for j in range(1,ny):
             u[j,i] = un[j,i]-un[j,i]*dt/dx*(un[j,i]-un[j,i-1])-un[j,i]*dt/dy*(un[j,i]-un[j-1,i])
             v[j,i] = vn[j,i]-vn[j,i]*dt/dx*(vn[j,i]-vn[j,i-1])-vn[j,i]*dt/dy*(vn[j,i]-vn[j-1,i])
 
@@ -84,7 +84,7 @@ for n in range(nt):
     v[:,0] = 1
     v[:,-1] = 1
 
-    # Plot the results
+    # plot the results
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     surf = ax.plot_surface(X, Y, u, cmap=cm.viridis, antialiased=False)

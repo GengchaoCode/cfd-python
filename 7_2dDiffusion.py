@@ -1,5 +1,5 @@
 '''
-Solve the 2-D linear convection equation using the finite difference method.
+Solve the 2-D diffusion equation using the finite difference method.
 '''
 
 import numpy as np                              # here we load numpy
@@ -16,18 +16,18 @@ plt.rcParams["mathtext.fontset"] = "stix"       # set the math font to Times
 nx = 81                                         # grid points in x-direction
 ny = 81                                         # grid points in y-direction
 nt = 100                                        # number of time steps
-c = 1                                           # wave speed
 dx = 2/(nx-1)                                   # spatial resolution in x-direction
 dy = 2/(ny-1)                                   # spatial resolution in y-direction
+nu = 0.05                                       # viscosity
 sigma = 0.2                                     # for CFL condition
-dt = sigma*dx
+dt = sigma*dx*dy/nu
 
 x = np.linspace(0,2,nx)                         # x-coordinates
 y = np.linspace(0,2,ny)                         # y-coordinates
 
 ## Assign initial conditions
 # u = 2 when x and y are between 0.5 and 1 and u = 1 everywhere else
-u = np.ones((ny, nx))                           # col (x) will always be the last dimension
+u = np.ones((ny,nx))                            # col (x) will always be the last dimension
 u[int(0.5/dy):int(1/dy+1), int(0.5/dx):int(1/dx+1)] = 2
 
 ## Plot the initial condition
@@ -55,7 +55,7 @@ plt.tight_layout(pad=0.1)                       # make the layout tight to minim
 ax.annotate('$t = 0.000$ s', xy=(0.75,0.9), xycoords='axes fraction', fontsize=10)
 
 # save and show the figure
-folderName = '/home/ygc/Documents/Codes/cfd-python/2dLinearconvection/'
+folderName = '/home/ygc/Documents/Codes/cfd-python/2dDiffusion/'
 fileName = 'u000.png'
 plt.savefig(folderName+fileName, dpi=300)
 plt.show(block=False)
@@ -66,17 +66,20 @@ plt.close()
 for n in range(nt):
     un = u.copy()
 
-    for i in range(1, nx):
-        for j in range(1, ny):
-            u[j,i] = un[j,i]-c*dt/dx*(un[j,i]-un[j,i-1])-c*dt/dy*(un[j,i]-un[j-1,i])
+    # for i in range(1,nx-1):
+    #     for j in range(1,ny-1):
+    #         u[j,i] = un[j,i]+nu*dt/dx/dx*(un[j,i+1]-2*un[j,i]+un[j,i-1])+nu*dt/dy/dy*(un[j+1,i]-2*un[j,i]+un[j-1,i])
 
-    # set the boundary values
+    # the array operation instead of loops should be much more efficient
+    u[1:-1,1:-1] = un[1:-1,1:-1]+nu*dt/dx/dx*(un[1:-1,2:]-2*un[1:-1,1:-1]+un[1:-1,0:-2])+nu*dt/dy/dy*(un[2:,1:-1]-2*un[1:-1,1:-1]+un[0:-2,1:-1])
+
+    # set the boundary values according to the BCs
     u[0,:] = 1
     u[-1,:] = 1
     u[:,0] = 1
     u[:,-1] = 1
 
-    # Plot the results
+    # plot the results
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     surf = ax.plot_surface(X, Y, u, cmap=cm.viridis, antialiased=False)

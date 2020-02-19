@@ -1,5 +1,5 @@
 '''
-Solve the 1-D nonlinear convection equation using the finite difference method.
+Solve the 1-D diffusion equation using the finite difference method.
 '''
 
 import numpy as np                              # here we load numpy

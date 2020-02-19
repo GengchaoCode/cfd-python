@@ -135,4 +135,5 @@ dmypy.json
 1dBergers/
 2dLinearConvection/
 2dNonlinearConvection/
-
+2dDiffusion/
+2dBergers/
