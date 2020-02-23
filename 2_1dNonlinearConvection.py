@@ -3,7 +3,7 @@ Solve the 1-D nonlinear convection equation using the finite difference method.
 '''
 
 import numpy as np                              # here we load numpy
-from matplotlib import pyplot as plt             # here we load matplotlib
+from matplotlib import pyplot as plt            # here we load matplotlib
 import time, sys                                # here we load some utilities
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter, AutoMinorLocator)
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
@@ -14,8 +14,8 @@ plt.rcParams["mathtext.fontset"] = "stix"       # set the math font to Times
 lx = 2                                          # consider a domain that is 2 unit of length
 nx = 41                                         # the number of grid points
 dx = lx/(nx-1)                                  # grid spacing
-nt = 25                                         # the number of time steps
-dt = 0.025                                      # time step
+nt = 100                                        # the number of time steps
+dt = 0.005                                      # time step
 
 ## Define the initial condition - a hat function
 u = np.ones(nx)                                 # create an array which is nx elements long with every value equal to 1

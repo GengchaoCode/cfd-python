@@ -12,10 +12,10 @@ plt.rcParams["mathtext.fontset"] = "stix"       # set the math font to Times
 
 ## Define the geometry (length), spatial and temporal resolution, and the wavespeed
 lx = 2                                          # consider a domain that is 2 unit of length
-nx = 85                                         # the number of grid points
+nx = 41                                         # the number of grid points
 dx = lx/(nx-1)                                  # grid spacing
-nt = 25                                         # the number of time steps
-dt = 0.025                                      # time step
+nt = 100                                        # the number of time steps
+dt = 0.005                                      # time step
 c = 1                                           # wavespeed
 
 ## Define the initial condition - a hat function

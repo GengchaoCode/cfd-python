@@ -56,7 +56,7 @@ plt.tight_layout(pad=0.1)                       # make the layout tight to minim
 ax.annotate('$t = 0.000$ s', xy=(0.75,0.9), xycoords='axes fraction', fontsize=10)
 
 # save and show the figure
-folderName = '/home/ygc/Documents/Codes/cfd-python/2dNonlinearconvection/'
+folderName = '/home/ygc/Documents/Codes/cfd-python/2dNonlinearConvection/'
 fileName = 'u000.png'
 plt.savefig(folderName+fileName, dpi=300)
 plt.show(block=False)
@@ -70,8 +70,8 @@ for n in range(nt):
 
     for i in range(1,nx):
         for j in range(1,ny):
-            u[j,i] = un[j,i]-un[j,i]*dt/dx*(un[j,i]-un[j,i-1])-un[j,i]*dt/dy*(un[j,i]-un[j-1,i])
-            v[j,i] = vn[j,i]-vn[j,i]*dt/dx*(vn[j,i]-vn[j,i-1])-vn[j,i]*dt/dy*(vn[j,i]-vn[j-1,i])
+            u[j,i] = un[j,i]-un[j,i]*dt/dx*(un[j,i]-un[j,i-1])-vn[j,i]*dt/dy*(un[j,i]-un[j-1,i])
+            v[j,i] = vn[j,i]-un[j,i]*dt/dx*(vn[j,i]-vn[j,i-1])-vn[j,i]*dt/dy*(vn[j,i]-vn[j-1,i])
 
     # set the boundary values for both u and v according to the BCs
     u[0,:] = 1

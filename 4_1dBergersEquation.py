@@ -79,7 +79,7 @@ for t in range(nt):
     un = u.copy()                               # calculate u based on un
 
     # calculate the value at the interior grid points
-    for i in range(0,nx-1):
+    for i in range(1,nx-1):
         u[i] = un[i]-un[i]*dt/dx*(un[i]-un[i-1])+nu*dt/dx**2*(un[i+1]-2*un[i]+un[i-1])
 
     # set the boundary values according to the periodic boundary condition -> head = end
@@ -94,7 +94,7 @@ for t in range(nt):
     # plot and compare the numerical and analytical solutions
     plt.figure(figsize=(3,2))
     plt.plot(x, u, marker='.', label='numerical')
-    plt.plot(x, uright, label='analytical')
+    # plt.plot(x, uright, label='analytical')
 
     # set the axis properties
     ax = plt.gca()
@@ -116,7 +116,7 @@ for t in range(nt):
     ax.annotate('$t = {0:.3f}$ s'.format((t+1)*dt), xy=(0.75,0.9), xycoords='axes fraction', fontsize=10)
     
     # show the legend
-    plt.legend(fontsize=8)
+    # plt.legend(fontsize=8)
 
     # save and show the figure
     fileName = 'u{:0>3d}.png'.format(t+1)

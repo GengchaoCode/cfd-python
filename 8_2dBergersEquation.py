@@ -72,12 +72,12 @@ for n in range(nt):
 
     # array operation on the finite difference form of the horizontal velocity
     u[1:-1,1:-1] = un[1:-1,1:-1]-dt/dx*un[1:-1,1:-1]*(un[1:-1,1:-1]-un[1:-1,:-2]) \
-                                -dt/dy*vn[1:-1,1:-1]*(vn[1:-1,1:-1]-vn[:-2,1:-1]) \
+                                -dt/dy*vn[1:-1,1:-1]*(un[1:-1,1:-1]-un[:-2,1:-1]) \
                                 +nu*dt/dx/dx*(un[1:-1,2:]-2*un[1:-1,1:-1]+un[1:-1,:-2]) \
                                 +nu*dt/dy/dy*(un[2:,1:-1]-2*un[1:-1,1:-1]+un[:-2,1:-1])
 
     # array operation on the finite difference form of the vertical velocity
-    v[1:-1,1:-1] = vn[1:-1,1:-1]-dt/dx*un[1:-1,1:-1]*(un[1:-1,1:-1]-un[1:-1,:-2]) \
+    v[1:-1,1:-1] = vn[1:-1,1:-1]-dt/dx*un[1:-1,1:-1]*(vn[1:-1,1:-1]-vn[1:-1,:-2]) \
                                 -dt/dy*vn[1:-1,1:-1]*(vn[1:-1,1:-1]-vn[:-2,1:-1]) \
                                 +nu*dt/dx/dx*(vn[1:-1,2:]-2*vn[1:-1,1:-1]+vn[1:-1,:-2]) \
                                 +nu*dt/dy/dy*(vn[2:,1:-1]-2*vn[1:-1,1:-1]+vn[:-2,1:-1])
