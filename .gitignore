@@ -1,9 +1,9 @@
 # output folders
-1dLinearConvection/
-1dNonlinearConvection/
+1dLinearConvect/
+1dNonlinearConvect/
 1dDiffusion/
 1dBurgers/
-2dLinearConvection/
-2dNonlinearConvection/
+2dLinearConvect/
+2dNonlinearConvect/
 2dDiffusion/
 2dBurgers/
