@@ -2,7 +2,8 @@
 Solve the 2-D Laplace equation using the finite difference method. In stead of tracking a wave through time,
 the Laplace equation calculates the equilibrium state of a system under the supplied boundary condition.
 '''
-
+import os
+os.system('clear')                                  # clear the screen
 import numpy as np                                  # here we load numpy
 from matplotlib import pyplot as plt                # here we load matplotlib
 from matplotlib import cm                           # colormap
@@ -10,22 +11,21 @@ import time, sys                                    # here we load some utilitie
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter, AutoMinorLocator)
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from mpl_toolkits.mplot3d import Axes3D             # new library required for projected 3D plots
-plt.rcParams["font.family"] = "Time New Roman"      # set the font to Times globally
+plt.rcParams["font.family"] = "Times New Roman"     # set the font to Times globally
 plt.rcParams["mathtext.fontset"] = "stix"           # set the math font to Times
 
 ## Define a function to plot the 2D results in a 3D figure
-def plot2d(x, y, p, t):
+def plot2d(X, Y, p):
     """A function to present the 2-D simulation results in a 3-D way.
     
     Arguments:
-        x {meshgrid} -- x coordinates
-        y {meshgrid} -- y coordinates
-        p {meshgrid} -- pressure value
-        t {float} -- time
+        X {meshgrid} -- x coordinates
+        Y {meshgrid} -- y coordinates
+        p {meshgrid} -- pressure values
     """
     fig = plt.figure()
     ax = fig.gca(projection='3d')
-    surf = ax.plot_surface(x, y, p, cmap=cm.viridis, antialiased=False)
+    surf = ax.plot_surface(X, Y, p, cmap=cm.viridis, antialiased=False)
 
     # set the axis properties
     ax.xaxis.set_major_formatter(FormatStrFormatter('%g'))
@@ -40,13 +40,8 @@ def plot2d(x, y, p, t):
     plt.xlim(0, 2)
     plt.ylim(0, 1)
     # ax.set_zlim(1, 2)
+    ax.view_init(30, 225)
     plt.tight_layout(pad=0.1)                       # make the layout tight to minimize the white space
-
-    # annotate the current time
-    ax.annotate('$t = {0:.3f}$ s'.format(t), xy=(0.75,0.9), xycoords='axes fraction', fontsize=10)
-
-    # show and save the figure
-    plt.show()
 
 ## Define a function to solve the Laplace equation using finite difference
 def laplace2d(p, dx, dy, diffTarget):
@@ -69,7 +64,7 @@ def laplace2d(p, dx, dy, diffTarget):
         
         # set the boundary values - done during the calculation
         p[:,0] = 0                                  # p = 0 @ x = 0
-        p[:,-1] = np.arange(0,1,dy)                 # p = y @ x = 2
+        p[:,-1] = np.arange(0,1.01,dy)              # p = y @ x = 2
         p[0,:] = p[1,:]                             # dp/dy = 0 @ y = 0
         p[-1,:] = p[-2,:]                           # dp/dy = 0 @ y = 1
 
@@ -88,6 +83,25 @@ dy = ly/(ny-1)                                      # space step in y
 p = np.zeros((ny,nx))                               # create a x by y array of 0s
 x = np.linspace(0, lx, nx)
 y = np.linspace(0, ly, ny)
+X, Y = np.meshgrid(x, y)
 p[:,-1] = y
 
-plot2d(x, y, p, 0)
+## Plot and save the initial state
+# make a directory
+folderName = './2dLaplace/'
+if not os.path.isdir(folderName):
+    os.mkdir(folderName)
+
+fileName = 'initial.png'
+plot2d(X, Y, p)
+print('Saving the initial state...')
+plt.savefig(folderName+fileName, dpi=300)
+
+## Calculate the Laplace equation and plot the results
+diffTarget = 1e-4
+laplace2d(p, dx, dy, diffTarget)
+
+fileName = 'final.png'
+plot2d(X, Y, p)
+print('Saving the final state...')
+plt.savefig(folderName+fileName, dpi=300)
