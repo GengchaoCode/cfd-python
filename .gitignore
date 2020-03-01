@@ -8,4 +8,5 @@
 2dDiffusion/
 2dBurgers/
 2dLaplace/
-.vscode/
+.vscode
+2dPoisson/
