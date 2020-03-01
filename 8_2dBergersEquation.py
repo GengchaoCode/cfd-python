@@ -1,7 +1,8 @@
 '''
 Solve the 2-D Bergers' equation using the finite difference method.
 '''
-
+import os
+os.system('clear')
 import numpy as np                              # here we load numpy
 from matplotlib import pyplot as plt            # here we load matplotlib
 from matplotlib import cm                       # colormap
@@ -9,7 +10,8 @@ import time, sys                                # here we load some utilities
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter, AutoMinorLocator)
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from mpl_toolkits.mplot3d import Axes3D         # new library required for projected 3D plots
-plt.rcParams["font.family"] = "stix"            # set the font to Times globally
+import matplotlib.font_manager
+plt.rcParams["font.family"] = "Times New Roman" # set the font to Times globally
 plt.rcParams["mathtext.fontset"] = "stix"       # set the math font to Times
 
 ## Variable declarations
@@ -58,7 +60,7 @@ plt.tight_layout(pad=0.1)                       # make the layout tight to minim
 ax.annotate('$t = 0.000$ s', xy=(0.75,0.9), xycoords='axes fraction', fontsize=10)
 
 # save and show the figure
-folderName = '/home/ygc/Documents/Codes/cfd-python/2dBergers/'
+folderName = './2dBurgers/'
 fileName = 'u000.png'
 plt.savefig(folderName+fileName, dpi=300)
 plt.show(block=False)
@@ -122,3 +124,4 @@ for n in range(nt):
     plt.show(block=False)
     plt.pause(0.1)                                  # show the image for 0.1 s
     plt.close()
+    print(n)
