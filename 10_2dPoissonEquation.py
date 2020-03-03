@@ -1,6 +1,6 @@
 '''
-Solve the 2-D Laplace equation using the finite difference method. In stead of tracking a wave through time,
-the Laplace equation calculates the equilibrium state of a system under the supplied boundary condition.
+Solve the 2-D Poisson equation using the finite difference method. In stead of tracking a wave through time,
+the Poisson equation calculates the equilibrium state of a system under the supplied boundary condition.
 '''
 import os
 os.system('clear')                                  # clear the screen
